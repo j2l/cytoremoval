@@ -1,0 +1,527 @@
+<!DOCTYPE>
+
+<html>
+
+  <head>
+    <title>cytoscape-compound-drag-and-drop demo</title>
+
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+
+    <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+
+    <script src="cytoscape-compound-drag-and-drop.js"></script>
+
+    <style>
+      body {
+        font-family: helvetica neue, helvetica, liberation sans, arial, sans-serif;
+        font-size: 14px;
+      }
+
+      #cy {
+        position: absolute;
+        left: 0;
+        top: 50;
+        bottom: 0;
+        right: 0;
+        z-index: 1;
+      }
+
+      h1 {
+        opacity: 1;
+        font-size: 1.2em;
+        font-weight: bold;
+      }
+
+      #options {
+        z-index: 2;
+        position: absolute;
+        right: 0;
+        top: 0;
+        margin: 0.5em;
+      }
+    </style>
+
+    <script>
+      elements = JSON.parse(`{
+    "nodes": [{"data":{"id":"2000", "parent": "2","label":"REMOVAL"},"position":{"x":338,"y":338}},
+    {"data":{"id":"98959","label":"Nertie"},"position":{"x":1,"y":1}},
+{"data":{"id":"394","label":"Batsheva"},"position":{"x":2,"y":2}},
+{"data":{"id":"76","label":"Hope"},"position":{"x":3,"y":3}},
+{"data":{"id":"2","label":"Anny"},"position":{"x":4,"y":4}},
+{"data":{"id":"8","label":"Gabbie"},"position":{"x":5,"y":5}},
+{"data":{"id":"1","label":"Xymenes"},"position":{"x":6,"y":6}},
+{"data":{"id":"2","label":"Jude"},"position":{"x":7,"y":7}},
+{"data":{"id":"590","label":"Thomasa"},"position":{"x":8,"y":8}},
+{"data":{"id":"67080","label":"Fionnula"},"position":{"x":9,"y":9}},
+{"data":{"id":"3420","label":"Zebulon"},"position":{"x":10,"y":10}},
+{"data":{"id":"0314","label":"Vaughan"},"position":{"x":11,"y":11}},
+{"data":{"id":"64289","label":"Theodore"},"position":{"x":12,"y":12}},
+{"data":{"id":"1084","label":"Daryn"},"position":{"x":13,"y":13}},
+{"data":{"id":"2","label":"Aprilette"},"position":{"x":14,"y":14}},
+{"data":{"id":"031","label":"Monro"},"position":{"x":15,"y":15}},
+{"data":{"id":"482","label":"Arlene"},"position":{"x":16,"y":16}},
+{"data":{"id":"1","label":"Joshua"},"position":{"x":17,"y":17}},
+{"data":{"id":"88","label":"Haslett"},"position":{"x":18,"y":18}},
+{"data":{"id":"83629","label":"Dill"},"position":{"x":19,"y":19}},
+{"data":{"id":"450","label":"Jard"},"position":{"x":20,"y":20}},
+{"data":{"id":"014","label":"Benjy"},"position":{"x":21,"y":21}},
+{"data":{"id":"4","label":"Eamon"},"position":{"x":22,"y":22}},
+{"data":{"id":"75","label":"Briano"},"position":{"x":23,"y":23}},
+{"data":{"id":"403","label":"Francyne"},"position":{"x":24,"y":24}},
+{"data":{"id":"2095","label":"Laure"},"position":{"x":25,"y":25}},
+{"data":{"id":"26436","label":"Paten"},"position":{"x":26,"y":26}},
+{"data":{"id":"4","label":"Ivor"},"position":{"x":27,"y":27}},
+{"data":{"id":"058","label":"Allyn"},"position":{"x":28,"y":28}},
+{"data":{"id":"49481","label":"Ferdinanda"},"position":{"x":29,"y":29}},
+{"data":{"id":"3","label":"Elene"},"position":{"x":30,"y":30}},
+{"data":{"id":"2114","label":"Mercie"},"position":{"x":31,"y":31}},
+{"data":{"id":"24749","label":"Lucille"},"position":{"x":32,"y":32}},
+{"data":{"id":"528","label":"Robert"},"position":{"x":33,"y":33}},
+{"data":{"id":"7039","label":"Shaine"},"position":{"x":34,"y":34}},
+{"data":{"id":"2078","label":"Ty"},"position":{"x":35,"y":35}},
+{"data":{"id":"683","label":"Davine"},"position":{"x":36,"y":36}},
+{"data":{"id":"13","label":"Alastair"},"position":{"x":37,"y":37}},
+{"data":{"id":"8","label":"Bradly"},"position":{"x":38,"y":38}},
+{"data":{"id":"662","label":"Johnathan"},"position":{"x":39,"y":39}},
+{"data":{"id":"64567","label":"Bertie"},"position":{"x":40,"y":40}},
+{"data":{"id":"77","label":"Dora"},"position":{"x":41,"y":41}},
+{"data":{"id":"92717","label":"Inger"},"position":{"x":42,"y":42}},
+{"data":{"id":"604","label":"Dorothea"},"position":{"x":43,"y":43}},
+{"data":{"id":"1647","label":"Clywd"},"position":{"x":44,"y":44}},
+{"data":{"id":"153","label":"Thea"},"position":{"x":45,"y":45}},
+{"data":{"id":"63724","label":"Gradey"},"position":{"x":46,"y":46}},
+{"data":{"id":"1824","label":"Buddy"},"position":{"x":47,"y":47}},
+{"data":{"id":"43","label":"Raddie"},"position":{"x":48,"y":48}},
+{"data":{"id":"31","label":"Clementius"},"position":{"x":49,"y":49}},
+{"data":{"id":"9484","label":"Vail"},"position":{"x":50,"y":50}},
+{"data":{"id":"935","label":"Marthe"},"position":{"x":51,"y":51}},
+{"data":{"id":"92","label":"Tim"},"position":{"x":52,"y":52}},
+{"data":{"id":"87","label":"Christophorus"},"position":{"x":53,"y":53}},
+{"data":{"id":"13","label":"Conn"},"position":{"x":54,"y":54}},
+{"data":{"id":"7","label":"Rutter"},"position":{"x":55,"y":55}},
+{"data":{"id":"71","label":"Arline"},"position":{"x":56,"y":56}},
+{"data":{"id":"772","label":"Cornell"},"position":{"x":57,"y":57}},
+{"data":{"id":"6","label":"Zaccaria"},"position":{"x":58,"y":58}},
+{"data":{"id":"04","label":"Ronna"},"position":{"x":59,"y":59}},
+{"data":{"id":"32","label":"Knox"},"position":{"x":60,"y":60}},
+{"data":{"id":"1","label":"Cob"},"position":{"x":61,"y":61}},
+{"data":{"id":"805","label":"Rene"},"position":{"x":62,"y":62}},
+{"data":{"id":"80","label":"Flinn"},"position":{"x":63,"y":63}},
+{"data":{"id":"0","label":"Mimi"},"position":{"x":64,"y":64}},
+{"data":{"id":"917","label":"Elita"},"position":{"x":65,"y":65}},
+{"data":{"id":"76950","label":"Kingsley"},"position":{"x":66,"y":66}},
+{"data":{"id":"62859","label":"Nicola"},"position":{"x":67,"y":67}},
+{"data":{"id":"3","label":"Lock"},"position":{"x":68,"y":68}},
+{"data":{"id":"8","label":"Leelah"},"position":{"x":69,"y":69}},
+{"data":{"id":"3","label":"Buffy"},"position":{"x":70,"y":70}},
+{"data":{"id":"20","label":"Penni"},"position":{"x":71,"y":71}},
+{"data":{"id":"7101","label":"Janessa"},"position":{"x":72,"y":72}},
+{"data":{"id":"67","label":"Ivy"},"position":{"x":73,"y":73}},
+{"data":{"id":"05","label":"Evelyn"},"position":{"x":74,"y":74}},
+{"data":{"id":"5","label":"Tish"},"position":{"x":75,"y":75}},
+{"data":{"id":"9880","label":"Elia"},"position":{"x":76,"y":76}},
+{"data":{"id":"343","label":"Roana"},"position":{"x":77,"y":77}},
+{"data":{"id":"88880","label":"Marcelia"},"position":{"x":78,"y":78}},
+{"data":{"id":"5","label":"Kristal"},"position":{"x":79,"y":79}},
+{"data":{"id":"62","label":"Mose"},"position":{"x":80,"y":80}},
+{"data":{"id":"7310","label":"Maure"},"position":{"x":81,"y":81}},
+{"data":{"id":"1","label":"Chrisse"},"position":{"x":82,"y":82}},
+{"data":{"id":"1270","label":"Kris"},"position":{"x":83,"y":83}},
+{"data":{"id":"2","label":"Casey"},"position":{"x":84,"y":84}},
+{"data":{"id":"396","label":"Fin"},"position":{"x":85,"y":85}},
+{"data":{"id":"22003","label":"Isabelita"},"position":{"x":86,"y":86}},
+{"data":{"id":"23194","label":"Pietrek"},"position":{"x":87,"y":87}},
+{"data":{"id":"36","label":"Conroy"},"position":{"x":88,"y":88}},
+{"data":{"id":"3","label":"Rhonda"},"position":{"x":89,"y":89}},
+{"data":{"id":"1","label":"Bertie"},"position":{"x":90,"y":90}},
+{"data":{"id":"97","label":"Aura"},"position":{"x":91,"y":91}},
+{"data":{"id":"456","label":"Mirelle"},"position":{"x":92,"y":92}},
+{"data":{"id":"9","label":"Antoni"},"position":{"x":93,"y":93}},
+{"data":{"id":"8892","label":"Morton"},"position":{"x":94,"y":94}},
+{"data":{"id":"347","label":"Daphene"},"position":{"x":95,"y":95}},
+{"data":{"id":"93","label":"Jakob"},"position":{"x":96,"y":96}},
+{"data":{"id":"35960","label":"Camile"},"position":{"x":97,"y":97}},
+{"data":{"id":"15","label":"Shelia"},"position":{"x":98,"y":98}},
+{"data":{"id":"9959","label":"Sibby"},"position":{"x":99,"y":99}},
+{"data":{"id":"8121","label":"Gloria"},"position":{"x":100,"y":100}},
+{"data":{"id":"05834","label":"Rupert"},"position":{"x":101,"y":101}},
+{"data":{"id":"066","label":"Earl"},"position":{"x":102,"y":102}},
+{"data":{"id":"0","label":"Minni"},"position":{"x":103,"y":103}},
+{"data":{"id":"23","label":"Saw"},"position":{"x":104,"y":104}},
+{"data":{"id":"242","label":"Elvin"},"position":{"x":105,"y":105}},
+{"data":{"id":"0","label":"Katerine"},"position":{"x":106,"y":106}},
+{"data":{"id":"20","label":"Leila"},"position":{"x":107,"y":107}},
+{"data":{"id":"3901","label":"Taylor"},"position":{"x":108,"y":108}},
+{"data":{"id":"31767","label":"Randall"},"position":{"x":109,"y":109}},
+{"data":{"id":"692","label":"Isabel"},"position":{"x":110,"y":110}},
+{"data":{"id":"6","label":"Gil"},"position":{"x":111,"y":111}},
+{"data":{"id":"37300","label":"Vonni"},"position":{"x":112,"y":112}},
+{"data":{"id":"06840","label":"Midge"},"position":{"x":113,"y":113}},
+{"data":{"id":"8","label":"Rogerio"},"position":{"x":114,"y":114}},
+{"data":{"id":"1","label":"Gertrude"},"position":{"x":115,"y":115}},
+{"data":{"id":"9","label":"Elsey"},"position":{"x":116,"y":116}},
+{"data":{"id":"0","label":"Stavros"},"position":{"x":117,"y":117}},
+{"data":{"id":"38","label":"Russ"},"position":{"x":118,"y":118}},
+{"data":{"id":"77","label":"Donia"},"position":{"x":119,"y":119}},
+{"data":{"id":"82897","label":"Allen"},"position":{"x":120,"y":120}},
+{"data":{"id":"63842","label":"Karena"},"position":{"x":121,"y":121}},
+{"data":{"id":"7","label":"Andy"},"position":{"x":122,"y":122}},
+{"data":{"id":"10094","label":"Fiona"},"position":{"x":123,"y":123}},
+{"data":{"id":"1","label":"Englebert"},"position":{"x":124,"y":124}},
+{"data":{"id":"71","label":"Broderic"},"position":{"x":125,"y":125}},
+{"data":{"id":"46","label":"Paulie"},"position":{"x":126,"y":126}},
+{"data":{"id":"240","label":"Casandra"},"position":{"x":127,"y":127}},
+{"data":{"id":"534","label":"Margi"},"position":{"x":128,"y":128}},
+{"data":{"id":"38","label":"Bobbye"},"position":{"x":129,"y":129}},
+{"data":{"id":"95566","label":"Nestor"},"position":{"x":130,"y":130}},
+{"data":{"id":"851","label":"Bebe"},"position":{"x":131,"y":131}},
+{"data":{"id":"8","label":"Caralie"},"position":{"x":132,"y":132}},
+{"data":{"id":"839","label":"Kevon"},"position":{"x":133,"y":133}},
+{"data":{"id":"058","label":"Kessia"},"position":{"x":134,"y":134}},
+{"data":{"id":"6","label":"Banky"},"position":{"x":135,"y":135}},
+{"data":{"id":"687","label":"Marja"},"position":{"x":136,"y":136}},
+{"data":{"id":"1006","label":"Robbie"},"position":{"x":137,"y":137}},
+{"data":{"id":"18","label":"Yasmin"},"position":{"x":138,"y":138}},
+{"data":{"id":"289","label":"Freeland"},"position":{"x":139,"y":139}},
+{"data":{"id":"18390","label":"Austin"},"position":{"x":140,"y":140}},
+{"data":{"id":"99","label":"Neda"},"position":{"x":141,"y":141}},
+{"data":{"id":"60","label":"Bennie"},"position":{"x":142,"y":142}},
+{"data":{"id":"8054","label":"Madlin"},"position":{"x":143,"y":143}},
+{"data":{"id":"99742","label":"Frankie"},"position":{"x":144,"y":144}},
+{"data":{"id":"0037","label":"Darren"},"position":{"x":145,"y":145}},
+{"data":{"id":"881","label":"Tim"},"position":{"x":146,"y":146}},
+{"data":{"id":"774","label":"Halley"},"position":{"x":147,"y":147}},
+{"data":{"id":"82611","label":"Winifred"},"position":{"x":148,"y":148}},
+{"data":{"id":"853","label":"Ogdon"},"position":{"x":149,"y":149}},
+{"data":{"id":"75834","label":"Idalina"},"position":{"x":150,"y":150}},
+{"data":{"id":"32992","label":"Stefano"},"position":{"x":151,"y":151}},
+{"data":{"id":"34","label":"Niki"},"position":{"x":152,"y":152}},
+{"data":{"id":"5585","label":"Dean"},"position":{"x":153,"y":153}},
+{"data":{"id":"8","label":"Glyn"},"position":{"x":154,"y":154}},
+{"data":{"id":"58","label":"Abbe"},"position":{"x":155,"y":155}},
+{"data":{"id":"74","label":"Cathyleen"},"position":{"x":156,"y":156}},
+{"data":{"id":"4256","label":"Cathee"},"position":{"x":157,"y":157}},
+{"data":{"id":"0821","label":"Ediva"},"position":{"x":158,"y":158}},
+{"data":{"id":"68132","label":"Kaleb"},"position":{"x":159,"y":159}},
+{"data":{"id":"25","label":"Sabrina"},"position":{"x":160,"y":160}},
+{"data":{"id":"898","label":"Casey"},"position":{"x":161,"y":161}},
+{"data":{"id":"13","label":"Nadine"},"position":{"x":162,"y":162}},
+{"data":{"id":"39114","label":"Jana"},"position":{"x":163,"y":163}},
+{"data":{"id":"439","label":"Belvia"},"position":{"x":164,"y":164}},
+{"data":{"id":"61","label":"Cherri"},"position":{"x":165,"y":165}},
+{"data":{"id":"54","label":"Stuart"},"position":{"x":166,"y":166}},
+{"data":{"id":"416","label":"Harrison"},"position":{"x":167,"y":167}},
+{"data":{"id":"9","label":"Elladine"},"position":{"x":168,"y":168}},
+{"data":{"id":"2395","label":"Layton"},"position":{"x":169,"y":169}},
+{"data":{"id":"1910","label":"Tucky"},"position":{"x":170,"y":170}},
+{"data":{"id":"89","label":"Morgana"},"position":{"x":171,"y":171}},
+{"data":{"id":"3","label":"Marcie"},"position":{"x":172,"y":172}},
+{"data":{"id":"9","label":"Rustin"},"position":{"x":173,"y":173}},
+{"data":{"id":"00","label":"Dagmar"},"position":{"x":174,"y":174}},
+{"data":{"id":"35548","label":"Cynthia"},"position":{"x":175,"y":175}},
+{"data":{"id":"62","label":"Tallou"},"position":{"x":176,"y":176}},
+{"data":{"id":"5831","label":"Tamra"},"position":{"x":177,"y":177}},
+{"data":{"id":"2350","label":"Barry"},"position":{"x":178,"y":178}},
+{"data":{"id":"19754","label":"Karolina"},"position":{"x":179,"y":179}},
+{"data":{"id":"5","label":"Barnett"},"position":{"x":180,"y":180}},
+{"data":{"id":"1421","label":"Bar"},"position":{"x":181,"y":181}},
+{"data":{"id":"9862","label":"De"},"position":{"x":182,"y":182}},
+{"data":{"id":"5447","label":"Sigmund"},"position":{"x":183,"y":183}},
+{"data":{"id":"6","label":"James"},"position":{"x":184,"y":184}},
+{"data":{"id":"323","label":"Orazio"},"position":{"x":185,"y":185}},
+{"data":{"id":"4","label":"Dulcy"},"position":{"x":186,"y":186}},
+{"data":{"id":"755","label":"Odie"},"position":{"x":187,"y":187}},
+{"data":{"id":"9782","label":"Rafaello"},"position":{"x":188,"y":188}},
+{"data":{"id":"4","label":"Kristine"},"position":{"x":189,"y":189}},
+{"data":{"id":"0923","label":"Berk"},"position":{"x":190,"y":190}},
+{"data":{"id":"440","label":"Miller"},"position":{"x":191,"y":191}},
+{"data":{"id":"94456","label":"Cory"},"position":{"x":192,"y":192}},
+{"data":{"id":"38","label":"Trey"},"position":{"x":193,"y":193}},
+{"data":{"id":"289","label":"Sanford"},"position":{"x":194,"y":194}},
+{"data":{"id":"9","label":"Moria"},"position":{"x":195,"y":195}},
+{"data":{"id":"7","label":"Verla"},"position":{"x":196,"y":196}},
+{"data":{"id":"6293","label":"Loralee"},"position":{"x":197,"y":197}},
+{"data":{"id":"4240","label":"Ella"},"position":{"x":198,"y":198}},
+{"data":{"id":"4854","label":"Roda"},"position":{"x":199,"y":199}},
+{"data":{"id":"127","label":"Jocelyne"},"position":{"x":200,"y":200}},
+{"data":{"id":"9","label":"Elmo"},"position":{"x":201,"y":201}},
+{"data":{"id":"8","label":"Guillema"},"position":{"x":202,"y":202}},
+{"data":{"id":"72","label":"Petronella"},"position":{"x":203,"y":203}},
+{"data":{"id":"816","label":"Augustina"},"position":{"x":204,"y":204}},
+{"data":{"id":"05289","label":"Agnesse"},"position":{"x":205,"y":205}},
+{"data":{"id":"3","label":"Mayer"},"position":{"x":206,"y":206}},
+{"data":{"id":"8205","label":"Liva"},"position":{"x":207,"y":207}},
+{"data":{"id":"49","label":"Vania"},"position":{"x":208,"y":208}},
+{"data":{"id":"55","label":"Nedi"},"position":{"x":209,"y":209}},
+{"data":{"id":"237","label":"Etienne"},"position":{"x":210,"y":210}},
+{"data":{"id":"49948","label":"Moore"},"position":{"x":211,"y":211}},
+{"data":{"id":"21","label":"Eustace"},"position":{"x":212,"y":212}},
+{"data":{"id":"0","label":"Giacinta"},"position":{"x":213,"y":213}},
+{"data":{"id":"64434","label":"Dee dee"},"position":{"x":214,"y":214}},
+{"data":{"id":"1899","label":"Matthaeus"},"position":{"x":215,"y":215}},
+{"data":{"id":"98622","label":"Nestor"},"position":{"x":216,"y":216}},
+{"data":{"id":"53481","label":"Glynda"},"position":{"x":217,"y":217}},
+{"data":{"id":"11508","label":"Suki"},"position":{"x":218,"y":218}},
+{"data":{"id":"7","label":"Malia"},"position":{"x":219,"y":219}},
+{"data":{"id":"9","label":"Dunn"},"position":{"x":220,"y":220}},
+{"data":{"id":"91712","label":"Phyllis"},"position":{"x":221,"y":221}},
+{"data":{"id":"8549","label":"Lanny"},"position":{"x":222,"y":222}},
+{"data":{"id":"8318","label":"Tory"},"position":{"x":223,"y":223}},
+{"data":{"id":"09360","label":"Etienne"},"position":{"x":224,"y":224}},
+{"data":{"id":"2899","label":"Kristal"},"position":{"x":225,"y":225}},
+{"data":{"id":"0631","label":"Tiphanie"},"position":{"x":226,"y":226}},
+{"data":{"id":"315","label":"Flemming"},"position":{"x":227,"y":227}},
+{"data":{"id":"01","label":"Jocko"},"position":{"x":228,"y":228}},
+{"data":{"id":"1","label":"Rutter"},"position":{"x":229,"y":229}},
+{"data":{"id":"634","label":"Greta"},"position":{"x":230,"y":230}},
+{"data":{"id":"17","label":"Marv"},"position":{"x":231,"y":231}},
+{"data":{"id":"3066","label":"Ameline"},"position":{"x":232,"y":232}},
+{"data":{"id":"155","label":"Shani"},"position":{"x":233,"y":233}},
+{"data":{"id":"6","label":"Madlin"},"position":{"x":234,"y":234}},
+{"data":{"id":"4","label":"Trevor"},"position":{"x":235,"y":235}},
+{"data":{"id":"58","label":"Marmaduke"},"position":{"x":236,"y":236}},
+{"data":{"id":"10","label":"Elayne"},"position":{"x":237,"y":237}},
+{"data":{"id":"13","label":"Audie"},"position":{"x":238,"y":238}},
+{"data":{"id":"50511","label":"Caryl"},"position":{"x":239,"y":239}},
+{"data":{"id":"40","label":"Gwenni"},"position":{"x":240,"y":240}},
+{"data":{"id":"760","label":"Vanna"},"position":{"x":241,"y":241}},
+{"data":{"id":"5","label":"Thomasina"},"position":{"x":242,"y":242}},
+{"data":{"id":"05","label":"Maiga"},"position":{"x":243,"y":243}},
+{"data":{"id":"02429","label":"Merle"},"position":{"x":244,"y":244}},
+{"data":{"id":"4447","label":"Burk"},"position":{"x":245,"y":245}},
+{"data":{"id":"7239","label":"Randie"},"position":{"x":246,"y":246}},
+{"data":{"id":"0196","label":"Angelia"},"position":{"x":247,"y":247}},
+{"data":{"id":"66794","label":"Cybil"},"position":{"x":248,"y":248}},
+{"data":{"id":"74282","label":"Douglas"},"position":{"x":249,"y":249}},
+{"data":{"id":"60984","label":"Domeniga"},"position":{"x":250,"y":250}},
+{"data":{"id":"6651","label":"Al"},"position":{"x":251,"y":251}},
+{"data":{"id":"9","label":"Avril"},"position":{"x":252,"y":252}},
+{"data":{"id":"13","label":"Cherida"},"position":{"x":253,"y":253}},
+{"data":{"id":"36","label":"Craig"},"position":{"x":254,"y":254}},
+{"data":{"id":"07961","label":"Nanine"},"position":{"x":255,"y":255}},
+{"data":{"id":"866","label":"Willy"},"position":{"x":256,"y":256}},
+{"data":{"id":"59523","label":"Tabbatha"},"position":{"x":257,"y":257}},
+{"data":{"id":"29","label":"Katharina"},"position":{"x":258,"y":258}},
+{"data":{"id":"51","label":"Ronnica"},"position":{"x":259,"y":259}},
+{"data":{"id":"504","label":"Anthiathia"},"position":{"x":260,"y":260}},
+{"data":{"id":"2","label":"Kippie"},"position":{"x":261,"y":261}},
+{"data":{"id":"186","label":"Rice"},"position":{"x":262,"y":262}},
+{"data":{"id":"29830","label":"Genni"},"position":{"x":263,"y":263}},
+{"data":{"id":"38","label":"Anderea"},"position":{"x":264,"y":264}},
+{"data":{"id":"228","label":"Hamilton"},"position":{"x":265,"y":265}},
+{"data":{"id":"199","label":"Torey"},"position":{"x":266,"y":266}},
+{"data":{"id":"0","label":"Hamil"},"position":{"x":267,"y":267}},
+{"data":{"id":"7128","label":"Thibaut"},"position":{"x":268,"y":268}},
+{"data":{"id":"5660","label":"Kirstyn"},"position":{"x":269,"y":269}},
+{"data":{"id":"4207","label":"Graham"},"position":{"x":270,"y":270}},
+{"data":{"id":"5","label":"Starr"},"position":{"x":271,"y":271}},
+{"data":{"id":"01221","label":"Tucker"},"position":{"x":272,"y":272}},
+{"data":{"id":"9","label":"Gard"},"position":{"x":273,"y":273}},
+{"data":{"id":"429","label":"Lanita"},"position":{"x":274,"y":274}},
+{"data":{"id":"6226","label":"Lindy"},"position":{"x":275,"y":275}},
+{"data":{"id":"98","label":"Lanae"},"position":{"x":276,"y":276}},
+{"data":{"id":"8","label":"Charis"},"position":{"x":277,"y":277}},
+{"data":{"id":"168","label":"Bealle"},"position":{"x":278,"y":278}},
+{"data":{"id":"5","label":"Romeo"},"position":{"x":279,"y":279}},
+{"data":{"id":"52","label":"Mufi"},"position":{"x":280,"y":280}},
+{"data":{"id":"814","label":"Angus"},"position":{"x":281,"y":281}},
+{"data":{"id":"0682","label":"Ardisj"},"position":{"x":282,"y":282}},
+{"data":{"id":"1785","label":"Zane"},"position":{"x":283,"y":283}},
+{"data":{"id":"8","label":"Kandace"},"position":{"x":284,"y":284}},
+{"data":{"id":"31","label":"Huntley"},"position":{"x":285,"y":285}},
+{"data":{"id":"58","label":"Harriette"},"position":{"x":286,"y":286}},
+{"data":{"id":"2","label":"Osborn"},"position":{"x":287,"y":287}},
+{"data":{"id":"4","label":"Burton"},"position":{"x":288,"y":288}},
+{"data":{"id":"1118","label":"Lanette"},"position":{"x":289,"y":289}},
+{"data":{"id":"50","label":"Elden"},"position":{"x":290,"y":290}},
+{"data":{"id":"5","label":"Margot"},"position":{"x":291,"y":291}},
+{"data":{"id":"3","label":"Wainwright"},"position":{"x":292,"y":292}},
+{"data":{"id":"350","label":"Bertine"},"position":{"x":293,"y":293}},
+{"data":{"id":"828","label":"Cleve"},"position":{"x":294,"y":294}},
+{"data":{"id":"9","label":"Kristoforo"},"position":{"x":295,"y":295}},
+{"data":{"id":"4110","label":"Yasmeen"},"position":{"x":296,"y":296}},
+{"data":{"id":"012","label":"Ardenia"},"position":{"x":297,"y":297}},
+{"data":{"id":"48","label":"Griffith"},"position":{"x":298,"y":298}},
+{"data":{"id":"200","label":"Sigismondo"},"position":{"x":299,"y":299}},
+{"data":{"id":"40159","label":"Sophia"},"position":{"x":300,"y":300}},
+{"data":{"id":"53","label":"Brande"},"position":{"x":301,"y":301}},
+{"data":{"id":"4","label":"Benn"},"position":{"x":302,"y":302}},
+{"data":{"id":"6557","label":"Kenn"},"position":{"x":303,"y":303}},
+{"data":{"id":"303","label":"Fransisco"},"position":{"x":304,"y":304}},
+{"data":{"id":"0","label":"Dorella"},"position":{"x":305,"y":305}},
+{"data":{"id":"48","label":"Derrek"},"position":{"x":306,"y":306}},
+{"data":{"id":"345","label":"Barnie"},"position":{"x":307,"y":307}},
+{"data":{"id":"969","label":"Rowen"},"position":{"x":308,"y":308}},
+{"data":{"id":"81","label":"Willamina"},"position":{"x":309,"y":309}},
+{"data":{"id":"12308","label":"Vito"},"position":{"x":310,"y":310}},
+{"data":{"id":"04","label":"Pippy"},"position":{"x":311,"y":311}},
+{"data":{"id":"9","label":"Roxy"},"position":{"x":312,"y":312}},
+{"data":{"id":"77","label":"Maris"},"position":{"x":313,"y":313}},
+{"data":{"id":"313","label":"Vanya"},"position":{"x":314,"y":314}},
+{"data":{"id":"185","label":"Lelia"},"position":{"x":315,"y":315}},
+{"data":{"id":"58316","label":"Kalle"},"position":{"x":316,"y":316}},
+{"data":{"id":"42","label":"Joelie"},"position":{"x":317,"y":317}},
+{"data":{"id":"9743","label":"Jakob"},"position":{"x":318,"y":318}},
+{"data":{"id":"45","label":"Jarvis"},"position":{"x":319,"y":319}},
+{"data":{"id":"8390","label":"Lezlie"},"position":{"x":320,"y":320}},
+{"data":{"id":"753","label":"Miquela"},"position":{"x":321,"y":321}},
+{"data":{"id":"908","label":"Amalie"},"position":{"x":322,"y":322}},
+{"data":{"id":"425","label":"Josefa"},"position":{"x":323,"y":323}},
+{"data":{"id":"6","label":"Jenny"},"position":{"x":324,"y":324}},
+{"data":{"id":"3","label":"Athena"},"position":{"x":325,"y":325}},
+{"data":{"id":"72503","label":"Otto"},"position":{"x":326,"y":326}},
+{"data":{"id":"95031","label":"Aubry"},"position":{"x":327,"y":327}},
+{"data":{"id":"15663","label":"Gaylor"},"position":{"x":328,"y":328}},
+{"data":{"id":"469","label":"Arlen"},"position":{"x":329,"y":329}},
+{"data":{"id":"15","label":"Sansone"},"position":{"x":330,"y":330}},
+{"data":{"id":"6","label":"Alasdair"},"position":{"x":331,"y":331}},
+{"data":{"id":"29940","label":"Iorgo"},"position":{"x":332,"y":332}},
+{"data":{"id":"0","label":"Cliff"},"position":{"x":333,"y":333}},
+{"data":{"id":"5826","label":"Clemmie"},"position":{"x":334,"y":334}},
+{"data":{"id":"2","label":"Harris"},"position":{"x":335,"y":335}},
+{"data":{"id":"34","label":"Dulcie"},"position":{"x":336,"y":336}},
+{"data":{"id":"23","label":"Rodrick"},"position":{"x":337,"y":337}},
+{"data":{"id":"2","label":"Dirk"},"position":{"x":338,"y":338}}]
+}`)
+
+      document.addEventListener('DOMContentLoaded', function(){
+
+        var cy = window.cy = cytoscape({
+          container: document.getElementById('cy'),
+
+          style: [
+            {
+              selector: 'node',
+              style: {
+                'label': 'data(label)'
+              }
+            },
+
+            {
+              selector: 'node:parent',
+              style: {
+                'label': ''
+              }
+            },
+
+            {
+              selector: 'edge',
+              style: {
+                'curve-style': 'bezier',
+                'target-arrow-shape': 'triangle'
+              }
+            },
+
+            {
+              selector: '.cdnd-grabbed-node',
+              style: {
+                'background-color': 'red'
+              }
+            },
+
+            {
+              selector: '.cdnd-drop-sibling',
+              style: {
+                'background-color': 'red'
+              }
+            },
+
+            {
+              selector: '.cdnd-drop-target',
+              style: {
+                'border-color': 'red',
+                'border-style': 'dashed'
+              }
+            }
+          ],
+
+          elements: elements
+
+        });
+        // Get the array of nodes
+        const nodes = elements.nodes;
+        // Get a random index
+        const randomIndex1 = Math.floor(Math.random() * nodes.length);
+        // Get the label of the node at the random index
+        const randomId1 = nodes[randomIndex1].data.id;
+        const randomLabel1 = nodes[randomIndex1].data.label;
+        document.getElementById('output1').innerHTML = randomLabel1;
+        //
+        const randomIndex2 = Math.floor(Math.random() * nodes.length);
+        // Get the label of the node at the random index
+        const randomId2 = nodes[randomIndex2].data.id;
+        const randomLabel2 = nodes[randomIndex2].data.label;
+        document.getElementById('output2').innerHTML = randomLabel2;
+        //
+        const randomIndex3 = Math.floor(Math.random() * nodes.length);
+        // Get the label of the node at the random index
+        const randomId3 = nodes[randomIndex3].data.id;
+        const randomLabel3 = nodes[randomIndex3].data.label;
+        document.getElementById('output3').innerHTML = randomLabel3;
+
+        console.log(randomLabel1, randomLabel2, randomLabel3);
+        var trouves = [randomId1,randomId2,randomId3];
+        let remaining = []
+
+        var cdnd = cy.compoundDragAndDrop();
+        var removeEmptyParents = false;
+
+        var isParentOfOneChild = function(node){
+          console.log("node.children(): "+node.children().data.label);
+          return node.isParent() && node.children().length === 1;
+        };
+
+        var removeParent = function(parent){
+          parent.children().move({ parent: null });
+          parent.remove();
+        };
+
+        var removeParentsOfOneChild = function(){
+          cy.nodes().filter(isParentOfOneChild).forEach(removeParent);
+        };
+
+        // custom handler to remove parents with only 1 child on drop
+        cy.on('cdndout', function(event, dropTarget){
+          if( removeEmptyParents && isParentOfOneChild(dropTarget) ){
+            removeParent(dropTarget);
+          }
+        });
+        cy.on('cdndover', function(event, dropTarget){
+          console.log("event: "+event.target.id());
+          console.log("dropTarget: "+dropTarget.id());
+          trouves = trouves.filter(data => data !=event.target.id())
+          console.log("trouves: "+JSON.stringify(trouves));
+        });
+
+        // custom handler to remove parents with only 1 child (on remove of drop target or drop sibling)
+        cy.on('remove', function(event){
+          if( removeEmptyParents ){
+            removeParentsOfOneChild();
+          }
+        });
+
+        // toggle check handler
+        document.getElementById('remove-1ch-parents').addEventListener('click', function(){
+          removeEmptyParents = !removeEmptyParents;
+
+          if( removeEmptyParents ){
+            removeParentsOfOneChild();
+          }
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+    <h1>You are <span id="output1"></span> with your average 338 "friends"</h1>
+    <h1>Find and move: Yourself, <span id="output2"></span>, and <span id="output3"></span> to the REMOVAL Event</h1>
+
+    <div id="cy"></div>
+
+    <div id="options">
+        <input id="remove-1ch-parents" type="checkbox" type="hidden" value="false" />
+        <label for="remove-1ch-parents"> </label>
+    </div>
+  </body>
+
+</html>
